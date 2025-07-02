@@ -1,11 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 
-export function asyncHandler<
-  P = unknown,
-  ResBody = unknown,
-  ReqBody = unknown,
-  ReqQuery = unknown,
->(
+export function asyncHandler<P, ResBody, ReqBody, ReqQuery>(
   fn: (
     req: Request<P, ResBody, ReqBody, ReqQuery>,
     res: Response,
