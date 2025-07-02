@@ -26,10 +26,10 @@ describe('Region Model Unit Tests', function () {
       type: 'Polygon',
         coordinates:
           [
-            ['1', '0'],
-            ['0', '1'],
-            ['1', '1'],
-            ['1', '0'],
+            [1, 0],
+            [0, 1],
+            [1, 1],
+            [1, 0],
 
           ]
         
@@ -44,10 +44,10 @@ describe('Region Model Unit Tests', function () {
     expect(savedRegion.type).to.equal('Polygon');
     expect(savedRegion.coordinates[0]).to.have.lengthOf(4)
     expect(savedRegion.coordinates[0]).to.deep.equal([
-            ['1', '0'],
-            ['0', '1'],
-            ['1', '1'],
-            ['1', '0'],
+            [1, 0],
+            [0, 1],
+            [1, 1],
+            [1, 0],
           ])
   });
 
