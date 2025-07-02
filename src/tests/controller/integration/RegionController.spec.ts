@@ -215,6 +215,4 @@ describe("Region Controller Integration Tests", () => {
     expect(body.length).to.equal(1);
     expect(body[0]).to.have.property("name", "Region A");
   });
-
-
 });
