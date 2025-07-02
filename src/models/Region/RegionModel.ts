@@ -4,7 +4,7 @@ const geometrySchema = new Schema(
   {
     type: {
       type: String,
-      enum: ["Polygon", "Point"],
+      enum: ["Polygon"],
       required: true,
     },
     coordinates: {
