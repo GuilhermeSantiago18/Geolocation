@@ -27,7 +27,10 @@ const updateRegionService = async (
   id: string | Types.ObjectId,
   data: Partial<IRegion>,
 ): Promise<IRegion> => {
-  const updated = await Region.findByIdAndUpdate(id, data, { new: true });
+  const updated = await Region.findByIdAndUpdate(id, data, {
+    new: true,
+    runValidators: true,
+  });
   if (!updated) {
     throw new CustomError("Region not found", 404);
   }

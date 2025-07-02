@@ -10,6 +10,13 @@ function assert(
 }
 
 export function validateUpdateRegion(data: Partial<IRegion>): void {
+  if (("type" in data || "coordinates" in data) && !("geometry" in data)) {
+    throw new CustomError(
+      "Invalid payload: 'type' and 'coordinates' must be inside the 'geometry' object",
+      400,
+    );
+  }
+
   if ("name" in data) {
     assert(
       typeof data.name === "string" && data.name.trim().length > 0,
@@ -32,6 +39,15 @@ export function validateUpdateRegion(data: Partial<IRegion>): void {
     );
 
     const coords = geometry.coordinates;
+
+    coords.forEach((ring, ringIndex) => {
+      const firstPoint = ring[0];
+      const lastPoint = ring[ring.length - 1];
+      assert(
+        firstPoint[0] === lastPoint[0] && firstPoint[1] === lastPoint[1],
+        `Ring ${ringIndex} must be closed (first and last points must be the same)`,
+      );
+    });
     assert(coords.length > 0, "Geometry.coordinates cannot be empty");
 
     coords.forEach((ring, ringIndex) => {
