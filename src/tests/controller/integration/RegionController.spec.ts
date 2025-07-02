@@ -165,4 +165,30 @@ describe('Region Controller Integration Tests', () => {
     const updatedRegion = await Region.findById(region._id);
     expect(updatedRegion?.name).to.equal('New Name');
   });
+
+
+
+  it('GET /regions/contains should return a region containing a point', async () => {
+    await Region.create({
+    name: 'Region A',
+    type: 'Polygon',
+    coordinates: [[
+      [-46.634, -23.551],
+      [-46.634, -23.549],
+      [-46.631, -23.549],
+      [-46.631, -23.551],
+      [-46.634, -23.551]
+    ]]
+  });
+
+    const res = await request(app)
+      .get(`/region/contains`)
+      .query({ lng: -46.634, lat: -23.551 })
+
+
+  expect(res.status).to.equal(200);
+  expect(res.body).to.be.an('array');
+  expect(res.body.length).to.equal(1);
+  expect(res.body[0]).to.have.property('name', 'Region A');
+  });
 });
