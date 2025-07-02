@@ -3,9 +3,9 @@ import { expect } from 'chai';
 import request from 'supertest';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import app from '../../app';
-import { Region } from '../../models/Region/Region';
-import { IRegion } from '../../types/IRegion';
+import app from '../../../app';
+import { Region } from '../../../models/Region/Region';
+import { IRegion } from '../../../types/IRegion';
 
 describe('Region Controller Integration Tests', () => {
   let mongoServer: MongoMemoryServer;
@@ -109,6 +109,36 @@ describe('Region Controller Integration Tests', () => {
   });
 
   it('UPDATE / should update a region', async () => {
+    const region = await Region.create({
+      name: 'Old Name',
+      type: 'Polygon',
+      coordinates: [
+        [0, 0],
+        [0, 1],
+        [1, 1],
+        [1, 0],
+        [0, 0],
+      ],
+    });
+
+    const updatedData = {
+      name: 'New Name',
+    };
+
+    const res = await request(app)
+      .put(`/region/${region._id.toString()}`)
+      .send(updatedData);
+
+    expect(res.status).to.equal(200);
+    expect(res.body).to.have.property('name', 'New Name');
+
+    const updatedRegion = await Region.findById(region._id);
+    expect(updatedRegion?.name).to.equal('New Name');
+  });
+
+
+
+   it('UPDATE / should update a region', async () => {
     const region = await Region.create({
       name: 'Old Name',
       type: 'Polygon',
