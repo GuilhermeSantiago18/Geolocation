@@ -7,7 +7,9 @@
     "dev": "nodemon server.ts",
     "test": "mocha --require ts-node/register ./src/**/*.spec.ts --exit",
     "prepare": "husky install",
-    "coverage": "nyc npm test"
+    "coverage": "nyc npm test",
+    "lint": "npx eslint src/**/*.{ts,tsx,js,jsx}",
+    "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json}"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [

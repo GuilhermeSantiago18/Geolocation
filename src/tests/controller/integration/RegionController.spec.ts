@@ -211,10 +211,12 @@ describe('Region Controller Integration Tests', () => {
       .get(`/region/contains`)
       .query({ lng: -46.634, lat: -23.551 })
 
+    const body =  res.body as IRegion[]
+
 
   expect(res.status).to.equal(200);
-  expect(res.body).to.be.an('array');
-  expect(res.body.length).to.equal(1);
-  expect(res.body[0]).to.have.property('name', 'Region A');
+  expect(body).to.be.an('array');
+  expect(body.length).to.equal(1);
+  expect(body[0]).to.have.property('name', 'Region A');
   });
 });

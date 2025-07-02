@@ -2,7 +2,11 @@ import { Request, Response, NextFunction } from 'express';
 import {createRegionService, deleteRegionService, getAllRegionsService, getRegionByPointService, updateRegionService} from '../../services/Region/RegionService'
 import { IRegion } from '../../types/IRegion';
 
-const createRegionController = async (req: Request<{}, {}, IRegion>, res: Response, next: NextFunction) => {
+const createRegionController = async (
+  req: Request<unknown, unknown, IRegion>,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { name, geometry } = req.body;
 

@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import {Region} from '../../../models/Region/RegionModel';
+import { IRegion } from '../../../types/IRegion';
 
 describe('Region Model Integration Tests', function () {
   let mongoServer: MongoMemoryServer;
@@ -40,6 +41,7 @@ describe('Region Model Integration Tests', function () {
 
     const region = new Region(regionData);
     const savedRegion = await region.save();
+
 
     expect(savedRegion._id).to.not.equal(undefined);
     expect(savedRegion.name).to.equal('Test Region');
