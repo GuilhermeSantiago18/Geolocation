@@ -5,8 +5,13 @@ const createRegionService = async (data: IRegion) => {
   return await Region.create(data);
 };
 
+const getAllRegionsService = async (): Promise<IRegion[]> => {
+  return await Region.find()
+};
+
 
 
 export {
-    createRegionService
+    createRegionService,
+    getAllRegionsService
 }

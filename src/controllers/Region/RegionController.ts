@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import {createRegionService} from '../../services/RegionService'
+import {createRegionService, getAllRegionsService} from '../../services/RegionService'
+import { IRegion } from '../../types/IRegion';
 
-export const createRegion = async (req: Request, res: Response, next: NextFunction) => {
+const createRegionController = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { name, type, coordinates } = req.body;
 
@@ -12,3 +13,16 @@ export const createRegion = async (req: Request, res: Response, next: NextFuncti
     next(error);
   }
 };
+
+
+const listAllRegionsController  = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const allRegions = await getAllRegionsService();
+    res.status(200).json(allRegions);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export {createRegionController, listAllRegionsController}
