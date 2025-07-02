@@ -243,4 +243,33 @@ describe("Region Controller Integration Tests", () => {
     expect(body.length).to.equal(1);
     expect(body[0]).to.have.property("name", "Region A");
   });
+
+  it("GET /regions/address should return a region by address", async () => {
+    await Region.create({
+      name: "Region A",
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [-35.42647, -5.64583],
+            [-35.43031, -5.6473],
+            [-35.43286, -5.64345],
+            [-35.42826, -5.64103],
+            [-35.42647, -5.64583],
+          ],
+        ],
+      },
+    });
+
+    const res = await request(app)
+      .get(`/region/address`)
+      .query({ address: "Rua doutor jose augusto meira" });
+
+    const body = res.body as IRegion[];
+
+    expect(res.status).to.equal(200);
+    expect(body).to.be.an("array");
+    expect(body.length).to.equal(1);
+    expect(body[0]).to.have.property("name", "Region A");
+  });
 });
