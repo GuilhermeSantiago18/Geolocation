@@ -8,7 +8,7 @@ const geometrySchema = new Schema(
       required: true,
     },
     coordinates: {
-      type: Schema.Types.Mixed,
+      type: [[[Number]]],
       required: true,
     },
   },
