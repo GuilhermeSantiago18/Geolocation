@@ -3,6 +3,7 @@ import {
   deleteRegionController,
   getRegionByDistanceController,
   getRegionByPointController,
+  getRegionsByAddressController,
   listAllRegionsController,
   updateRegionController,
 } from "../controllers/Region/RegionController";
@@ -17,5 +18,6 @@ router.delete("/:id", asyncHandler(deleteRegionController));
 router.put("/:id", asyncHandler(updateRegionController));
 router.get("/contains", asyncHandler(getRegionByPointController));
 router.get("/nearby", asyncHandler(getRegionByDistanceController));
+router.get("/address", asyncHandler(getRegionsByAddressController));
 
 export default router;
