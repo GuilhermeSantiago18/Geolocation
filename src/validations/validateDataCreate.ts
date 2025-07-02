@@ -27,6 +27,22 @@ function validatePolygonCoordinates(
   );
 
   const outerRing = coordinates[0];
+  outerRing.forEach((point, i) => {
+    assert(
+      Array.isArray(point) && point.length === 2,
+      `Point ${i} must be [lng, lat] array`,
+    );
+    const [lng, lat] = point;
+    assert(
+      typeof lng === "number" && lng >= -180 && lng <= 180,
+      `Longitude at point ${i} must be between -180 and 180`,
+    );
+    assert(
+      typeof lat === "number" && lat >= -90 && lat <= 90,
+      `Latitude at point ${i} must be between -90 and 90`,
+    );
+  });
+
   assert(Array.isArray(outerRing), "Outer ring must be an array");
   assert(outerRing.length >= 4, "Polygon ring must have at least 4 points");
 

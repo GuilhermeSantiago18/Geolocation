@@ -72,6 +72,15 @@ export function validateUpdateRegion(data: Partial<IRegion>): void {
             `Geometry.coordinates[${ringIndex}][${pointIndex}][${numIndex}] must be a number`,
           );
         });
+        const [lng, lat] = point;
+        assert(
+          lng >= -180 && lng <= 180,
+          `Longitude at coordinates[${ringIndex}][${pointIndex}] must be between -180 and 180`,
+        );
+        assert(
+          lat >= -90 && lat <= 90,
+          `Latitude at coordinates[${ringIndex}][${pointIndex}] must be between -90 and 90`,
+        );
       });
     });
   }
