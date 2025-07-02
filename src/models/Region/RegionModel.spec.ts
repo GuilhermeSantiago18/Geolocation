@@ -38,8 +38,7 @@ describe('Region Model Unit Tests', function () {
     const region = new Region(regionData);
     const savedRegion = await region.save();
 
-
-    expect(savedRegion._id).to.exist;
+    expect(savedRegion._id).to.not.equal(undefined);
     expect(savedRegion.name).to.equal('Test Region');
     expect(savedRegion.type).to.equal('Polygon');
     expect(savedRegion.coordinates[0]).to.have.lengthOf(4)
@@ -65,14 +64,14 @@ describe('Region Model Unit Tests', function () {
       }
     );
 
-    let error = null;
     try {
       await region.validate();
     } catch (err) {
-      error = err;
+      const error = err as mongoose.Error.ValidationError;
+      expect(error).to.be.instanceOf(mongoose.Error.ValidationError);
+      expect(error.errors).to.have.property('name');
     }
-    expect(error).to.exist;
-    expect(error.errors).to.have.property('name');
+  
   });
 
   it('should fail validation if coordinates are missing', async () => {
@@ -83,14 +82,13 @@ describe('Region Model Unit Tests', function () {
       }
     );
 
-    let error = null;
     try {
       await region.validate();
     } catch (err) {
-      error = err;
+      const error = err as mongoose.Error.ValidationError;
+      expect(error).to.be.instanceOf(mongoose.Error.ValidationError);
+      expect(error.errors).to.have.property('coordinates');
     }
-    expect(error).to.exist;
-    expect(error.errors).to.have.property('coordinates');
   });
 
 });

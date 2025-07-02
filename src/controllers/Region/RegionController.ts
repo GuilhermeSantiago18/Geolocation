@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import {createRegionService, deleteRegionService, getAllRegionsService, updateRegionService} from '../../services/Region/RegionService'
 import { IRegion } from '../../types/IRegion';
 
-const createRegionController = async (req: Request, res: Response, next: NextFunction) => {
+const createRegionController = async (req: Request<{ id: string }, unknown, Partial<IRegion>>, res: Response, next: NextFunction) => {
   try {
     const { name, type, coordinates } = req.body;
 
@@ -35,7 +35,7 @@ const deleteRegionController  = async (req: Request, res: Response, next: NextFu
 };
 
 
-const updateRegionController  = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const updateRegionController  = async (req: Request<{ id: string }, unknown, Partial<IRegion>>, res: Response, next: NextFunction): Promise<void> => {
   try {
     const {id} = req.params
     const data = req.body
