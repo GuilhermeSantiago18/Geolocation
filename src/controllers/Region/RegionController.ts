@@ -9,6 +9,7 @@ import {
   updateRegionService,
 } from "../../services/Region/RegionService";
 import { IRegion } from "../../types/IRegion";
+import { CustomError } from "../../errors/CustomError";
 
 const createRegionController = async (
   req: Request<unknown, unknown, IRegion>,
@@ -17,6 +18,13 @@ const createRegionController = async (
 ) => {
   try {
     const { name, geometry } = req.body;
+
+    if (!name || typeof name !== "string") {
+      throw new CustomError("Name is required and must be a string", 400);
+    }
+    if (!geometry || typeof geometry !== "object") {
+      throw new CustomError("Geometry is required and must be an object", 400);
+    }
 
     const newRegion = await createRegionService({ name, geometry });
 
@@ -46,6 +54,10 @@ const deleteRegionController = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
+
+    if (!id || typeof id !== "string") {
+      throw new CustomError("Region ID is required and must be a string", 400);
+    }
     await deleteRegionService(id);
     res.status(204).send();
   } catch (error) {
@@ -60,7 +72,16 @@ const updateRegionController = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
+    if (!id || typeof id !== "string") {
+      throw new CustomError("Region ID is required and must be a string", 400);
+    }
     const data = req.body;
+    if (!data || typeof data !== "object") {
+      throw new CustomError(
+        "Update data is required and must be an object",
+        400,
+      );
+    }
     const updatedRegion = await updateRegionService(id, data);
     res.status(200).send(updatedRegion);
   } catch (error) {
@@ -77,8 +98,21 @@ export const getRegionByPointController = async (
     const { lng, lat } = req.query;
     console.log("query", req.query);
 
+    if (!lng || !lat) {
+      throw new CustomError(
+        "Longitude (lng) and latitude (lat) are required",
+        400,
+      );
+    }
+
     const lngNum = Number(lng);
     const latNum = Number(lat);
+    if (Number.isNaN(lngNum) || Number.isNaN(latNum)) {
+      throw new CustomError(
+        "Longitude (lng) and latitude (lat) must be valid numbers",
+        400,
+      );
+    }
 
     const point = {
       lng: lngNum,
@@ -99,11 +133,29 @@ const getRegionByDistanceController = async (
 ): Promise<void> => {
   try {
     const { lng, lat, distance } = req.query;
-    console.log("query", req.query);
+
+    if (!lng || !lat || !distance) {
+      throw new CustomError(
+        "Longitude (lng), latitude (lat) and distance are required",
+        400,
+      );
+    }
 
     const lngNum = Number(lng);
     const latNum = Number(lat);
     const distanceNum = Number(distance);
+
+    if (
+      Number.isNaN(lngNum) ||
+      Number.isNaN(latNum) ||
+      Number.isNaN(distanceNum) ||
+      distanceNum < 0
+    ) {
+      throw new CustomError(
+        "Longitude (lng), latitude (lat) must be valid numbers and distance must be a non-negative number",
+        400,
+      );
+    }
 
     const point = {
       lng: lngNum,
@@ -127,10 +179,7 @@ const getRegionsByAddressController = async (
     const { address } = req.query;
 
     if (!address || typeof address !== "string") {
-      res
-        .status(400)
-        .json({ error: "Address is required and must be a string" });
-      return;
+      throw new CustomError("Address is required and must be a string", 400);
     }
 
     const regions = await getRegionsByAddressService(address);
