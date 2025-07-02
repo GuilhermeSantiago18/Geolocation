@@ -4,6 +4,7 @@ import {
   deleteRegionService,
   getAllRegionsService,
   getRegionByPointService,
+  getRegionsByAddressService,
   getRegionsByDistanceService,
   updateRegionService,
 } from "../../services/Region/RegionService";
@@ -116,10 +117,35 @@ const getRegionByDistanceController = async (
     next(error);
   }
 };
+
+const getRegionsByAddressController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const { address } = req.query;
+
+    if (!address || typeof address !== "string") {
+      res
+        .status(400)
+        .json({ error: "Address is required and must be a string" });
+      return;
+    }
+
+    const regions = await getRegionsByAddressService(address);
+
+    res.status(200).json(regions);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   createRegionController,
   listAllRegionsController,
   deleteRegionController,
   updateRegionController,
   getRegionByDistanceController,
+  getRegionsByAddressController,
 };

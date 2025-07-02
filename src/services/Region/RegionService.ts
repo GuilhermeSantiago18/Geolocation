@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 import { Region } from "../../models/Region/RegionModel";
 import { IRegion, IPoint } from "../../types/IRegion";
+import { geocodeAddress } from "../geoCodingService";
 
 const createRegionService = async (data: IRegion): Promise<IRegion> => {
   return await Region.create(data);
@@ -55,6 +56,21 @@ const getRegionsByDistanceService = async ({ lng, lat, distance }: IPoint) => {
   return regions;
 };
 
+const getRegionsByAddressService = async (address: string) => {
+  const coords = await geocodeAddress(address);
+
+  return await Region.find({
+    geometry: {
+      $geoIntersects: {
+        $geometry: {
+          type: "Point",
+          coordinates: [coords.lng, coords.lat],
+        },
+      },
+    },
+  });
+};
+
 export {
   createRegionService,
   getAllRegionsService,
@@ -62,4 +78,5 @@ export {
   updateRegionService,
   getRegionByPointService,
   getRegionsByDistanceService,
+  getRegionsByAddressService,
 };
