@@ -1,4 +1,3 @@
-// tests/region.controller.spec.ts
 import { expect } from "chai";
 import request from "supertest";
 import mongoose from "mongoose";

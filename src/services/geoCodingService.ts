@@ -24,6 +24,7 @@ export const geocodeAddress = async (address: string): Promise<IPoint> => {
     });
 
     const data = response.data as GeocodeAPIResult[];
+    console.log("data", data);
     if (!Array.isArray(data) || data.length === 0) {
       throw new CustomError("Address not found", 400);
     }
@@ -33,7 +34,9 @@ export const geocodeAddress = async (address: string): Promise<IPoint> => {
       lng: Number(data[0].lon),
     };
   } catch (error) {
-    console.error(error);
+    if (error instanceof CustomError) {
+      throw error;
+    }
     throw new CustomError("Failed to fetch coordinates using address", 502);
   }
 };
