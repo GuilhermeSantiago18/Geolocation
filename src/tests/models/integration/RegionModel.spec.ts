@@ -40,7 +40,7 @@ describe('Region Model Integration Tests', function () {
     };
 
     const region = new Region(regionData);
-    const savedRegion = await region.save();
+    const savedRegion = await region.save() as IRegion;
 
 
     expect(savedRegion._id).to.not.equal(undefined);
