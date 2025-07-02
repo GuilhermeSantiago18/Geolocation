@@ -8,7 +8,7 @@ const regionSchema = new Schema({
       required: true,
     },
   coordinates: {
-      type: [[[String]]],
+      type: [[[Number]]],
       required: true,
     },
 });
