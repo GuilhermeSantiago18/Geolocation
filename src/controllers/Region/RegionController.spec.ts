@@ -28,7 +28,7 @@ describe('Region Controller Integration Tests', () => {
  });
 
 
-    it('should create a region', async () => {
+    it('POST / should create a region', async () => {
     const res = await request(app)
       .post('/regions')
       .send({
@@ -47,7 +47,7 @@ describe('Region Controller Integration Tests', () => {
         });
 
 
-  it('should list all regions', async () => {
+  it('GET / should list all regions', async () => {
     
   await Region.create([
     {
@@ -58,7 +58,6 @@ describe('Region Controller Integration Tests', () => {
         ['0', '1'],
         ['1', '1'],
         ['1', '0'],
-        ['0', '0'],
       ],
     },
     {
@@ -85,7 +84,7 @@ describe('Region Controller Integration Tests', () => {
   expect(names).to.include('Region 2');
 });
 
- it('should delete a region', async () => {
+ it(' DELETE / should delete a region', async () => {
   const regions = await Region.create([
     {
       name: 'Region 1',
@@ -113,6 +112,37 @@ describe('Region Controller Integration Tests', () => {
   const regionAfterDelete = await Region.findById(idToDelete);
   expect(regionAfterDelete).to.be.null;
 });
+
+
+
+it('UPDATE / should update a region', async () => {
+  const region = await Region.create({
+    name: 'Old Name',
+    type: 'Polygon',
+    coordinates: [
+      ['0', '0'],
+      ['0', '1'],
+      ['1', '1'],
+      ['1', '0'],
+      ['0', '0'],
+    ],
+  });
+
+  const updatedData = {
+    name: 'New Name',
+  };
+
+  const res = await request(app)
+    .put(`/regions/${region._id.toString()}`)
+    .send(updatedData);
+
+  expect(res.status).to.equal(200);
+  expect(res.body).to.have.property('name', 'New Name');
+
+  const updatedRegion = await Region.findById(region._id);
+  expect(updatedRegion?.name).to.equal('New Name');
+});
+
 
 
 
