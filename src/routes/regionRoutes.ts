@@ -1,6 +1,7 @@
 import {
   createRegionController,
   deleteRegionController,
+  getRegionByDistanceController,
   getRegionByPointController,
   listAllRegionsController,
   updateRegionController,
@@ -15,5 +16,6 @@ router.post("/", asyncHandler(createRegionController));
 router.delete("/:id", asyncHandler(deleteRegionController));
 router.put("/:id", asyncHandler(updateRegionController));
 router.get("/contains", asyncHandler(getRegionByPointController));
+router.get("/nearby", asyncHandler(getRegionByDistanceController));
 
 export default router;

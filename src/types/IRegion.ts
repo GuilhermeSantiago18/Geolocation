@@ -6,6 +6,7 @@ export type Coordinates = number[][][];
 export interface IPoint {
   lng: number;
   lat: number;
+  distance?: number;
 }
 
 export interface IRegion {

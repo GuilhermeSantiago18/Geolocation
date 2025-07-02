@@ -4,6 +4,7 @@ import {
   deleteRegionService,
   getAllRegionsService,
   getRegionByPointService,
+  getRegionsByDistanceService,
   updateRegionService,
 } from "../../services/Region/RegionService";
 import { IRegion } from "../../types/IRegion";
@@ -90,9 +91,35 @@ export const getRegionByPointController = async (
   }
 };
 
+const getRegionByDistanceController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const { lng, lat, distance } = req.query;
+    console.log("query", req.query);
+
+    const lngNum = Number(lng);
+    const latNum = Number(lat);
+    const distanceNum = Number(distance);
+
+    const point = {
+      lng: lngNum,
+      lat: latNum,
+      distance: distanceNum,
+    };
+
+    const regions = await getRegionsByDistanceService(point);
+    res.status(200).json(regions);
+  } catch (error) {
+    next(error);
+  }
+};
 export {
   createRegionController,
   listAllRegionsController,
   deleteRegionController,
   updateRegionController,
+  getRegionByDistanceController,
 };

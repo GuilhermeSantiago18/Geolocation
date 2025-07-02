@@ -215,4 +215,33 @@ describe("Region Controller Integration Tests", () => {
     expect(body.length).to.equal(1);
     expect(body[0]).to.have.property("name", "Region A");
   });
+
+  it("GET /regions/nearby should return a region nearby distance", async () => {
+    await Region.create({
+      name: "Region A",
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [-46.634, -23.551],
+            [-46.634, -23.549],
+            [-46.631, -23.549],
+            [-46.631, -23.551],
+            [-46.634, -23.551],
+          ],
+        ],
+      },
+    });
+
+    const res = await request(app)
+      .get(`/region/nearby`)
+      .query({ lng: -46.634, lat: -23.551, distance: 500 });
+
+    const body = res.body as IRegion[];
+
+    expect(res.status).to.equal(200);
+    expect(body).to.be.an("array");
+    expect(body.length).to.equal(1);
+    expect(body[0]).to.have.property("name", "Region A");
+  });
 });

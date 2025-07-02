@@ -39,10 +39,27 @@ const getRegionByPointService = async ({
   });
 };
 
+const getRegionsByDistanceService = async ({ lng, lat, distance }: IPoint) => {
+  const EARTH_RADIUS_METERS = 6378137;
+
+  const radiusInRadians = distance / EARTH_RADIUS_METERS;
+
+  const regions = await Region.find({
+    geometry: {
+      $geoWithin: {
+        $centerSphere: [[lng, lat], radiusInRadians],
+      },
+    },
+  });
+
+  return regions;
+};
+
 export {
   createRegionService,
   getAllRegionsService,
   deleteRegionService,
   updateRegionService,
   getRegionByPointService,
+  getRegionsByDistanceService,
 };
