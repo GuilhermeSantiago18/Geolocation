@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import {createRegionService, getAllRegionsService} from '../../services/RegionService'
+import {createRegionService, deleteRegionService, getAllRegionsService} from '../../services/RegionService'
 import { IRegion } from '../../types/IRegion';
 
 const createRegionController = async (req: Request, res: Response, next: NextFunction) => {
@@ -24,5 +24,15 @@ const listAllRegionsController  = async (_req: Request, res: Response, next: Nex
   }
 };
 
+const deleteRegionController  = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const {id} = req.params
+    await deleteRegionService(id);
+    res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
+};
 
-export {createRegionController, listAllRegionsController}
+
+export {createRegionController, listAllRegionsController, deleteRegionController}

@@ -1,5 +1,5 @@
 import express from 'express';
-import RegionRoutes from './routes/regionRutes'
+import RegionRoutes from './routes/regionRoutes'
 
 const app = express();
 

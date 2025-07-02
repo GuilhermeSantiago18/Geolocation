@@ -30,7 +30,7 @@ describe('Region Controller Integration Tests', () => {
 
     it('POST / should create a region', async () => {
     const res = await request(app)
-      .post('/regions')
+      .post('/region')
       .send({
         name: 'Test Region',
         type: 'Polygon',
@@ -72,7 +72,7 @@ describe('Region Controller Integration Tests', () => {
     },
   ]);
 
-  const res = await request(app).get('/regions');
+  const res = await request(app).get('/region');
 
   expect(res.status).to.equal(200);
   expect(res.body).to.be.an('array');
@@ -103,7 +103,7 @@ describe('Region Controller Integration Tests', () => {
 
 
   const res = await request(app)
-    .delete(`/regions/${idToDelete}`)
+    .delete(`/region/${idToDelete}`)
     .send();
 
   expect(res.status).to.equal(200);
@@ -133,7 +133,7 @@ it('UPDATE / should update a region', async () => {
   };
 
   const res = await request(app)
-    .put(`/regions/${region._id.toString()}`)
+    .put(`/region/${region._id.toString()}`)
     .send(updatedData);
 
   expect(res.status).to.equal(200);
