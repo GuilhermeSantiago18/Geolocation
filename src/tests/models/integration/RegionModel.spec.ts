@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import {Region} from '../../../models/Region/RegionModel';
 
-describe('Region Model Unit Tests', function () {
+describe('Region Model Integration Tests', function () {
   let mongoServer: MongoMemoryServer;
 
   before(async () => {
@@ -23,15 +23,18 @@ describe('Region Model Unit Tests', function () {
   it('should create a region successfully', async () => {
     const regionData = {
       name: 'Test Region',
-      type: 'Polygon',
+      geometry: {
+          type: 'Polygon',
         coordinates:
-          [
+          [[
             [1, 0],
             [0, 1],
             [1, 1],
             [1, 0],
 
-          ]
+          ]]
+      }
+    
         
     };
 
@@ -40,9 +43,9 @@ describe('Region Model Unit Tests', function () {
 
     expect(savedRegion._id).to.not.equal(undefined);
     expect(savedRegion.name).to.equal('Test Region');
-    expect(savedRegion.type).to.equal('Polygon');
-    expect(savedRegion.coordinates[0]).to.have.lengthOf(4)
-    expect(savedRegion.coordinates[0]).to.deep.equal([
+    expect(savedRegion.geometry.type).to.equal('Polygon');
+    expect(savedRegion.geometry.coordinates[0]).to.have.lengthOf(4)
+    expect(savedRegion.geometry.coordinates[0]).to.deep.equal([
             [1, 0],
             [0, 1],
             [1, 1],
@@ -53,14 +56,17 @@ describe('Region Model Unit Tests', function () {
   it('should fail validation if name is missing', async () => {
     const region = new Region({
       name: null,
-      type: 'Polygon',
-      coordinates: [
+      geomoetry: {
+    type: 'Polygon',
+      coordinates: [[
             [0, 0],
             [0, 1],
             [1, 1],
             [1, 0],
             [0, 0]
-        ]
+        ]]
+      }
+     
       }
     );
 
@@ -77,8 +83,11 @@ describe('Region Model Unit Tests', function () {
   it('should fail validation if coordinates are missing', async () => {
     const region = new Region({
       name: 'Test Region',
-      type: 'Polygon',
+      geometry: {
+         type: 'Polygon',
       coordinates: null
+      }
+     
       }
     );
 
@@ -87,7 +96,8 @@ describe('Region Model Unit Tests', function () {
     } catch (err) {
       const error = err as mongoose.Error.ValidationError;
       expect(error).to.be.instanceOf(mongoose.Error.ValidationError);
-      expect(error.errors).to.have.property('coordinates');
+      console.log("error", error)
+      expect(error.errors).to.have.property('geometry.coordinates');
     }
   });
 
