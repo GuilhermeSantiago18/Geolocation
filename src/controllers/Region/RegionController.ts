@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import {createRegionService, deleteRegionService, getAllRegionsService} from '../../services/RegionService'
+import {createRegionService, deleteRegionService, getAllRegionsService, updateRegionService} from '../../services/Region/RegionService'
 import { IRegion } from '../../types/IRegion';
 
 const createRegionController = async (req: Request, res: Response, next: NextFunction) => {
@@ -35,4 +35,16 @@ const deleteRegionController  = async (req: Request, res: Response, next: NextFu
 };
 
 
-export {createRegionController, listAllRegionsController, deleteRegionController}
+const updateRegionController  = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const {id} = req.params
+    const data = req.body
+    const updatedRegion = await updateRegionService(id, data);
+    res.status(200).send(updatedRegion);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export {createRegionController, listAllRegionsController, deleteRegionController, updateRegionController}
