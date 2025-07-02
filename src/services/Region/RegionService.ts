@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 import { Region } from "../../models/Region/RegionModel";
 import { IRegion, IPoint } from "../../types/IRegion";
 import { geocodeAddress } from "../geoCodingService";
+import { CustomError } from "../../errors/CustomError";
 
 const createRegionService = async (data: IRegion): Promise<IRegion> => {
   return await Region.create(data);
@@ -13,15 +14,24 @@ const getAllRegionsService = async (): Promise<IRegion[]> => {
 
 const deleteRegionService = async (
   id: string | Types.ObjectId,
-): Promise<{ deletedCount?: number }> => {
-  return await Region.deleteOne({ _id: id });
+): Promise<void> => {
+  const getRegionById = await Region.findOne({ _id: id });
+  if (!getRegionById) {
+    throw new CustomError("Region not found", 404);
+  }
+
+  await Region.deleteOne({ _id: id });
 };
 
 const updateRegionService = async (
   id: string | Types.ObjectId,
   data: Partial<IRegion>,
-): Promise<IRegion | null> => {
-  return await Region.findByIdAndUpdate(id, data, { new: true });
+): Promise<IRegion> => {
+  const updated = await Region.findByIdAndUpdate(id, data, { new: true });
+  if (!updated) {
+    throw new CustomError("Region not found", 404);
+  }
+  return updated;
 };
 
 const getRegionByPointService = async ({

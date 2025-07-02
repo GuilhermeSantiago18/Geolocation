@@ -1,9 +1,13 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, RequestHandler } from "express";
 
-export function asyncHandler(
-  fn: (req: Request, res: Response, next: NextFunction) => Promise<void>,
-) {
-  return function (req: Request, res: Response, next: NextFunction) {
+export function asyncHandler<P, ResBody, ReqBody, ReqQuery>(
+  fn: (
+    req: Request<P, ResBody, ReqBody, ReqQuery>,
+    res: Response,
+    next: NextFunction,
+  ) => Promise<void>,
+): RequestHandler<P, ResBody, ReqBody, ReqQuery> {
+  return function (req, res, next) {
     fn(req, res, next).catch(next);
   };
 }

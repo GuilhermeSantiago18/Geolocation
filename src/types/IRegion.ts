@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export type GeometryType = "Polygon" | "Point";
+export type GeometryType = "Polygon";
 export type Coordinates = number[][][];
 
 export interface IPoint {
