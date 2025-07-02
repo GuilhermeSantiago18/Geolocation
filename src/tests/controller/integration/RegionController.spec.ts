@@ -4,7 +4,7 @@ import request from 'supertest';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import app from '../../../app';
-import { Region } from '../../../models/Region/Region';
+import { Region } from '../../../models/Region/RegionModel';
 import { IRegion } from '../../../types/IRegion';
 
 describe('Region Controller Integration Tests', () => {

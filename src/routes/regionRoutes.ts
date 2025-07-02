@@ -1,4 +1,4 @@
-import { createRegionController, deleteRegionController, listAllRegionsController, updateRegionController } from '../controllers/Region/RegionController';
+import { createRegionController, deleteRegionController, getRegionByPointController, listAllRegionsController, updateRegionController } from '../controllers/Region/RegionController';
 import { Router } from 'express';
 import { asyncHandler } from '../utils/asyncHandler';
 
@@ -9,5 +9,6 @@ router.get('/', asyncHandler(listAllRegionsController));
 router.post('/', asyncHandler(createRegionController));
 router.delete('/:id', asyncHandler(deleteRegionController));
 router.put('/:id', asyncHandler(updateRegionController));
+router.get('/contains', getRegionByPointController);
 
 export default router;
