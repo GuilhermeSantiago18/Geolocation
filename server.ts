@@ -1,12 +1,13 @@
-const express = require('express')
-const {connectDB} = require('./src/config/database')
-
-const app = express();
-app.use(express.json());
+import app from './src/app';
+import { connectDB } from './src/config/database';
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, async () => {
+const startServer = async () => {
   await connectDB();
-  console.log(`Server running on ${PORT}`);
-});
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+};
+
+startServer();
