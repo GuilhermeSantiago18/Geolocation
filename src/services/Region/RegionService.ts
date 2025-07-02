@@ -15,10 +15,6 @@ const getAllRegionsService = async (): Promise<IRegion[]> => {
 const deleteRegionService = async (
   id: string | Types.ObjectId,
 ): Promise<void> => {
-  if (!Types.ObjectId.isValid(id)) {
-    throw new CustomError("Invalid region id", 400);
-  }
-
   const getRegionById = await Region.findOne({ _id: id });
   if (!getRegionById) {
     throw new CustomError("Region not found", 404);
@@ -31,9 +27,6 @@ const updateRegionService = async (
   id: string | Types.ObjectId,
   data: Partial<IRegion>,
 ): Promise<IRegion> => {
-  if (!Types.ObjectId.isValid(id)) {
-    throw new CustomError("Invalid region id", 400);
-  }
   const updated = await Region.findByIdAndUpdate(id, data, { new: true });
   if (!updated) {
     throw new CustomError("Region not found", 404);
