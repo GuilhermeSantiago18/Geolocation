@@ -1,16 +1,19 @@
 import { Schema, model } from "mongoose";
 
-const geometrySchema = new Schema({
-  type: {
-    type: String,
-    enum: ['Polygon', 'Point'],
-    required: true,
+const geometrySchema = new Schema(
+  {
+    type: {
+      type: String,
+      enum: ["Polygon", "Point"],
+      required: true,
+    },
+    coordinates: {
+      type: Schema.Types.Mixed,
+      required: true,
+    },
   },
-  coordinates: {
-    type: Schema.Types.Mixed,
-    required: true,
-  },
-}, { _id: false });
+  { _id: false },
+);
 
 const regionSchema = new Schema({
   name: { type: String, required: true },
@@ -20,6 +23,6 @@ const regionSchema = new Schema({
   },
 });
 
-regionSchema.index({ geometry: '2dsphere' });
+regionSchema.index({ geometry: "2dsphere" });
 
 export const Region = model("Region", regionSchema);
