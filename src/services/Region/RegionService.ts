@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
-import { Region } from '../../models/Region/Region';
-import { IRegion } from '../../types/IRegion';
+import { Region } from '../../models/Region/RegionModel';
+import { IRegion, IPoint } from '../../types/IRegion';
 
 const createRegionService = async (data: IRegion): Promise<IRegion> => {
   return await Region.create(data);
@@ -18,6 +18,22 @@ const updateRegionService = async (id: string | Types.ObjectId, data: Partial<IR
   return await Region.findByIdAndUpdate(id, data, { new: true });
 };
 
+const getRegionByPointService = async ({ lng, lat }: IPoint): Promise<IRegion[]> => {
+  return await Region.find({
+  geometry: {
+    $geoIntersects: {
+      $geometry: {
+        type: 'Point',
+        coordinates: [lng, lat],
+      },
+    },
+  },
+});
+
+};
+
+
+
 
 
 
@@ -25,6 +41,7 @@ export {
     createRegionService,
     getAllRegionsService,
     deleteRegionService,
-    updateRegionService
+    updateRegionService,
+    getRegionByPointService
     
 }
