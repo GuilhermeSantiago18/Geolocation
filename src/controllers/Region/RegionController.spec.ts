@@ -69,7 +69,6 @@ describe('Region Controller Integration Tests', () => {
         ['1', '2'],
         ['2', '2'],
         ['2', '1'],
-        ['1', '1'],
       ],
     },
   ]);
@@ -85,6 +84,39 @@ describe('Region Controller Integration Tests', () => {
   expect(names).to.include('Region 1');
   expect(names).to.include('Region 2');
 });
+
+ it('should delete a region', async () => {
+  const regions = await Region.create([
+    {
+      name: 'Region 1',
+      type: 'Polygon',
+      coordinates: [
+        ['0', '0'],
+        ['0', '1'],
+        ['1', '1'],
+        ['1', '0'],
+      ],
+    },
+  ]);
+
+
+  const idToDelete = regions[0]._id.toString();
+
+
+  const res = await request(app)
+    .delete(`/regions/${idToDelete}`)
+    .send();
+
+  expect(res.status).to.equal(200);
+  expect(res.body).to.have.property('_id', idToDelete);
+
+  const regionAfterDelete = await Region.findById(idToDelete);
+  expect(regionAfterDelete).to.be.null;
+});
+
+
+
+
 
 
 })
