@@ -8,7 +8,7 @@ const createRegionController = async (req: Request<{ id: string }, unknown, Part
 
     const newRegion = await createRegionService({ name, type, coordinates });
 
-    return res.status(201).json(newRegion);
+    res.status(201).json(newRegion);
   } catch (error) {
     next(error);
   }
