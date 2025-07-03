@@ -12,7 +12,6 @@ import { IPoint, IRegion } from "../../types/regionTypes";
 import { CustomError } from "../../errors/CustomError";
 import { validateDataQuery } from "../../validations/validateDataQuery";
 import { validateUpdateRegion } from "../../validations/validateDataUpdate";
-import { validateObjectId } from "../../validations/validateObjectId";
 import { HttpStatusCode } from "../../constants/httpStatus";
 
 const createRegionController = async (
@@ -39,7 +38,6 @@ const deleteRegionController = async (
   res: Response,
 ): Promise<void> => {
   const { id } = req.params;
-  validateObjectId(id);
 
   await deleteRegionService(id);
   res.status(HttpStatusCode.NO_CONTENT).send();
@@ -52,7 +50,6 @@ const updateRegionController = async (
   const { id } = req.params;
   const data = req.body;
 
-  validateObjectId(id);
   validateUpdateRegion(data);
 
   const updatedRegion = await updateRegionService(id, data);
