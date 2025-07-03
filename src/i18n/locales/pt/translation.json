@@ -1,0 +1,17 @@
+{
+  "region": {
+    "invalidPayloadGeometryWrapper": "Payload inválido: 'type' e 'coordinates' devem estar dentro do objeto 'geometry'",
+    "nameRequired": "Nome deve ser uma string não vazia",
+    "geometryObjectInvalid": "Geometry deve ser um objeto",
+    "geometryTypeInvalid": "Geometry.type deve ser \"Polygon\"",
+    "coordinatesNotArray": "Geometry.coordinates deve ser um array",
+    "coordinatesEmpty": "Geometry.coordinates não pode estar vazio",
+    "ringNotClosed": "O anel {{ringIndex}} deve estar fechado (primeiro e último pontos devem ser iguais)",
+    "ringNotArray": "Geometry.coordinates[{{ringIndex}}] deve ser um array",
+    "pointNotArray": "Geometry.coordinates[{{ringIndex}}][{{pointIndex}}] deve ser um array",
+    "pointInvalidLength": "Geometry.coordinates[{{ringIndex}}][{{pointIndex}}] deve conter exatamente 2 números",
+    "pointNotNumber": "Geometry.coordinates[{{ringIndex}}][{{pointIndex}}][{{numIndex}}] deve ser um número",
+    "longitudeInvalid": "Longitude em coordinates[{{ringIndex}}][{{pointIndex}}] deve estar entre -180 e 180",
+    "latitudeInvalid": "Latitude em coordinates[{{ringIndex}}][{{pointIndex}}] deve estar entre -90 e 90"
+  }
+}

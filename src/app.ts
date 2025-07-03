@@ -4,7 +4,7 @@ import swaggerUi from "swagger-ui-express";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 import YAML from "yamljs";
 import { OpenAPIV3 } from "openapi-types";
-import i18nextMiddleware from "i18next-http-middleware";
+import * as i18nextMiddleware from "i18next-http-middleware";
 import i18n from "./i18n";
 
 const swaggerDocument = YAML.load(
