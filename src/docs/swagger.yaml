@@ -106,7 +106,7 @@ paths:
 
   /region/address:
     get:
-      summary: Regiões com base em endereço
+      summary: Regiões com contêm um endereço
       tags: [Região]
       parameters:
         - in: query
