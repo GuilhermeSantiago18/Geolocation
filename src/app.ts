@@ -1,16 +1,21 @@
 import express from "express";
 import RegionRoutes from "./routes/regionRoutes";
 import swaggerUi from "swagger-ui-express";
-import { swaggerSpec } from "./docs/swaggerConfig";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
+import YAML from "yamljs";
+import { OpenAPIV3 } from "openapi-types";
 
 const app = express();
 
 app.use(express.json());
 
-app.use("/region", RegionRoutes);
+const swaggerDocument = YAML.load(
+  "./src/docs/swagger.yaml",
+) as OpenAPIV3.Document;
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use("/region", RegionRoutes);
 
 app.use(errorMiddleware);
 
