@@ -4,11 +4,6 @@ import middleware from "i18next-http-middleware";
 import path from "path";
 const localesPath = path.resolve(__dirname, "../i18n/", "locales");
 
-console.log(
-  "Translation path:",
-  path.join(localesPath, "{{lng}}/translation.json"),
-);
-
 void i18n
   .use(Backend)
   .use(middleware.LanguageDetector)
