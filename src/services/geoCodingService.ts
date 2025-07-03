@@ -9,15 +9,19 @@ interface GeocodeAPIResult {
 
 export const geocodeAddress = async (address: string): Promise<IPoint> => {
   try {
+    const countryCode = process.env.GEOCODING_COUNTRY_CODE;
     const url =
       process.env.GEOCODING_API_BASE_URL ||
       "https://nominatim.openstreetmap.org";
 
+    const params = {
+      q: address,
+      format: "json",
+      ...(countryCode ? { countrycodes: countryCode } : {}),
+    };
+
     const response = await axios.get(url, {
-      params: {
-        q: address,
-        format: "json",
-      },
+      params,
       headers: {
         "User-Agent": "ozmap-app/1.0",
       },
