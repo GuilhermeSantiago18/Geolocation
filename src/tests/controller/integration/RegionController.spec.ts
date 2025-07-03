@@ -6,7 +6,7 @@ import app from "../../../app";
 import { Region } from "../../../models/Region/RegionModel";
 import { IRegion } from "../../../types/IRegion";
 
-describe("Region Controller Integration Tests", () => {
+describe("Integration Region Controller Tests", () => {
   let mongoServer: MongoMemoryServer;
 
   before(async () => {
@@ -87,8 +87,8 @@ describe("Region Controller Integration Tests", () => {
 
     const body = res.body as IRegion[];
 
-    // expect(res.status).to.equal(200);
-    // expect(body).to.be.an('array');
+    expect(res.status).to.equal(200);
+    expect(body).to.be.an("array");
     expect(body.length).to.be.at.least(2);
 
     const names = body.map((region: IRegion) => region.name);

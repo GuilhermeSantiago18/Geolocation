@@ -4,7 +4,7 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 import { Region } from "../../../models/Region/RegionModel";
 import { IRegion } from "../../../types/IRegion";
 
-describe("Region Model Integration Tests", function () {
+describe("Integration Region Model Tests", function () {
   let mongoServer: MongoMemoryServer;
 
   before(async () => {
@@ -92,7 +92,6 @@ describe("Region Model Integration Tests", function () {
     } catch (err) {
       const error = err as mongoose.Error.ValidationError;
       expect(error).to.be.instanceOf(mongoose.Error.ValidationError);
-      console.log("error", error);
       expect(error.errors).to.have.property("geometry.coordinates");
     }
   });

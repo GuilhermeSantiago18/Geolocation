@@ -12,7 +12,7 @@ import { IRegion } from "../../../types/IRegion";
 import { Region } from "../../../models/Region/RegionModel";
 import { CustomError } from "../../../errors/CustomError";
 
-describe("Region Service Integration Tests", () => {
+describe("Integration Region Service Tests", () => {
   let mongoServer: MongoMemoryServer;
 
   before(async () => {
