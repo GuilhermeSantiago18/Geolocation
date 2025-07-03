@@ -1,0 +1,139 @@
+openapi: 3.0.0
+info:
+  title: API de Regiões
+  version: 1.0.0
+  description: Documentação da API REST para gerenciamento de regiões
+
+paths:
+  /region:
+    get:
+      summary: Lista todas as regiões
+      tags: [Região]
+      responses:
+        200:
+          description: Lista de regiões
+    post:
+      summary: Cria uma nova região
+      tags: [Região]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegionInput"
+      responses:
+        201:
+          description: Região criada com sucesso
+        400:
+          description: Erro de validação
+
+  /region/{id}:
+    delete:
+      summary: Deleta uma região pelo ID
+      tags: [Região]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Região deletada
+        404:
+          description: Região não encontrada
+    put:
+      summary: Atualiza uma região pelo ID
+      tags: [Região]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegionInput"
+      responses:
+        200:
+          description: Região atualizada
+
+  /region/contains:
+    get:
+      summary: Regiões que contêm um ponto
+      tags: [Região]
+      parameters:
+        - in: query
+          name: lng
+          required: true
+          schema:
+            type: number
+        - in: query
+          name: lat
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: Regiões encontradas
+
+  /region/nearby:
+    get:
+      summary: Regiões próximas a um ponto
+      tags: [Região]
+      parameters:
+        - in: query
+          name: lng
+          required: true
+          schema:
+            type: number
+        - in: query
+          name: lat
+          required: true
+          schema:
+            type: number
+        - in: query
+          name: distance
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: Regiões encontradas
+
+  /region/address:
+    get:
+      summary: Regiões com base em endereço
+      tags: [Região]
+      parameters:
+        - in: query
+          name: address
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Regiões retornadas por endereço
+
+components:
+  schemas:
+    RegionInput:
+      type: object
+      required:
+        - name
+        - geometry
+      properties:
+        name:
+          type: string
+        geometry:
+          type: object
+          properties:
+            type:
+              type: string
+              example: Polygon
+            coordinates:
+              type: array
+              example: [[[-35.42, -5.64], [-35.43, -5.64], [-35.42, -5.64]]]
