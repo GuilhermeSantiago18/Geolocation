@@ -6,6 +6,7 @@ import YAML from "yamljs";
 import { OpenAPIV3 } from "openapi-types";
 import * as i18nextMiddleware from "i18next-http-middleware";
 import i18n from "./i18n";
+import { requestLoggerMiddleware } from "./middlewares/requestLoggerMiddleware";
 
 const swaggerDocument = YAML.load(
   "./src/docs/swagger.yaml",
@@ -14,6 +15,8 @@ const swaggerDocument = YAML.load(
 const app = express();
 
 app.use(express.json());
+
+app.use(requestLoggerMiddleware);
 
 app.use(i18nextMiddleware.handle(i18n));
 
