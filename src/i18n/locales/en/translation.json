@@ -1,0 +1,35 @@
+{
+  "region": {
+    "invalidPayloadGeometryWrapper": "Invalid payload: 'type' and 'coordinates' must be inside the 'geometry' object",
+    "nameRequired": "Name must be a non-empty string",
+    "geometryObjectInvalid": "Geometry must be an object",
+    "geometryTypeInvalid": "Geometry.type must be \"Polygon\"",
+    "coordinatesNotArray": "Geometry.coordinates must be an array",
+    "coordinatesEmpty": "Geometry.coordinates cannot be empty",
+    "ringNotClosed": "Ring {{ringIndex}} must be closed (first and last points must be the same)",
+    "ringNotArray": "Geometry.coordinates[{{ringIndex}}] must be an array",
+    "pointNotArray": "Geometry.coordinates[{{ringIndex}}][{{pointIndex}}] must be an array",
+    "pointInvalidLength": "Geometry.coordinates[{{ringIndex}}][{{pointIndex}}] must have exactly 2 numbers",
+    "pointNotNumber": "Geometry.coordinates[{{ringIndex}}][{{pointIndex}}][{{numIndex}}] must be a number",
+    "longitudeInvalid": "Longitude at coordinates[{{ringIndex}}][{{pointIndex}}] must be between -180 and 180",
+    "latitudeInvalid": "Latitude at coordinates[{{ringIndex}}][{{pointIndex}}] must be between -90 and 90",
+
+    "invalidObject": "Invalid input: expected an object",
+    "geometryRequired": "Field 'geometry' is required and must be an object",
+    "geometryCoordinatesInvalid": "Field 'geometry coordinates' must be an array",
+    "geometryCoordinatesEmpty": "Field 'geometry coordinates' must have at least one ring",
+    "ringTooShort": "Polygon ring must have at least 4 points",
+    "pointInvalid": "Point {{index}} must be an array of [lng, lat]",
+    "longitudeInvalidFlat": "Longitude at point {{index}} must be between -180 and 180",
+    "latitudeInvalidFlat": "Latitude at point {{index}} must be between -90 and 90",
+
+    "invalidIdFormat": "Invalid Id format",
+    "queryInvalid": "Longitude (lng), latitude (lat), and distance (if provided) must be valid numbers",
+    "address": "Address is required and must be a string",
+    "notFound": "Region not found",
+
+    "fetch": {
+      "coordinates": "Failed to fetch coordinates using address"
+    }
+  }
+}

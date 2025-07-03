@@ -11,83 +11,84 @@ interface RegionInput {
   geometry: Geometry;
 }
 
-function assert(condition: boolean, message: string): asserts condition {
-  if (!condition) throw new CustomError(message, HttpStatusCode.BAD_REQUEST);
+function assert(
+  condition: boolean,
+  message: string,
+  options?: Record<string, unknown>,
+): asserts condition {
+  if (!condition)
+    throw new CustomError(message, HttpStatusCode.BAD_REQUEST, options);
 }
 
 function validatePolygonCoordinates(
   coordinates: number[][][],
 ): asserts coordinates is number[][][] {
-  assert(
-    Array.isArray(coordinates),
-    "Field 'geometry coordinates' must be an array",
-  );
-  assert(
-    coordinates.length > 0,
-    "Field 'geometry coordinates' must have at least one ring",
-  );
+  assert(Array.isArray(coordinates), "region.geometryCoordinatesInvalid");
+
+  assert(coordinates.length > 0, "region.geometryCoordinatesEmpty");
 
   const outerRing = coordinates[0];
+
+  assert(Array.isArray(outerRing), "region.geometryCoordinatesInvalid");
+  assert(outerRing.length >= 4, "region.ringTooShort");
+
   outerRing.forEach((point, i) => {
-    assert(
-      Array.isArray(point) && point.length === 2,
-      `Point ${i} must be [lng, lat] array`,
-    );
+    assert(Array.isArray(point) && point.length === 2, "region.pointInvalid", {
+      index: i,
+    });
+
     const [lng, lat] = point;
+
     assert(
       typeof lng === "number" && lng >= -180 && lng <= 180,
-      `Longitude at point ${i} must be between -180 and 180`,
+      "region.longitudeInvalid",
+      { index: i },
     );
     assert(
       typeof lat === "number" && lat >= -90 && lat <= 90,
-      `Latitude at point ${i} must be between -90 and 90`,
+      "region.latitudeInvalid",
+      { index: i },
     );
   });
 
-  assert(Array.isArray(outerRing), "Outer ring must be an array");
-  assert(outerRing.length >= 4, "Polygon ring must have at least 4 points");
-
   const firstPoint = outerRing[0];
   const lastPoint = outerRing[outerRing.length - 1];
+
   assert(
     Array.isArray(firstPoint) && firstPoint.length === 2,
-    "Points must be [lng, lat]",
+    "region.pointInvalid",
+    { index: 0 },
   );
   assert(
     Array.isArray(lastPoint) && lastPoint.length === 2,
-    "Points must be [lng, lat]",
+    "region.pointInvalid",
+    { index: outerRing.length - 1 },
   );
 
   assert(
     firstPoint[0] === lastPoint[0] && firstPoint[1] === lastPoint[1],
-    "First and last point of the polygon ring must be the same to close the polygon",
+    "region.ringNotClosed",
   );
 }
 
 export function validateCreateRegion(data: unknown): RegionInput {
-  assert(
-    typeof data === "object" && data !== null,
-    "Invalid input: expected an object",
-  );
+  assert(typeof data === "object" && data !== null, "region.invalidObject");
 
   const obj = data as Partial<RegionInput>;
 
   assert(
     typeof obj.name === "string" && obj.name.trim() !== "",
-    "Field 'name' is required and must be a non-empty string",
+    "region.nameRequired",
   );
 
   assert(
     typeof obj.geometry === "object" && obj.geometry !== null,
-    "Field 'geometry' is required and must be an object",
+    "region.geometryRequired",
   );
 
   const geometry = obj.geometry as Partial<Geometry>;
 
-  assert(
-    geometry.type === "Polygon",
-    "Field 'geometry type' must be 'Polygon'",
-  );
+  assert(geometry.type === "Polygon", "region.geometryTypeInvalid");
 
   validatePolygonCoordinates(geometry.coordinates);
 

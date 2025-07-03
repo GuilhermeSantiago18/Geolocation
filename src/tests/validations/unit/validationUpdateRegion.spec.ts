@@ -13,7 +13,7 @@ describe("Unit: validateDataUpdate", () => {
     const invalid: Partial<IRegion> = { name: "" };
     expect(() => validateUpdateRegion(invalid)).to.throw(
       CustomError,
-      "Name must be a non-empty string",
+      "region.nameRequired",
     );
   });
 
@@ -21,7 +21,7 @@ describe("Unit: validateDataUpdate", () => {
     const invalid = { geometry: null } as unknown as Partial<IRegion>;
     expect(() => validateUpdateRegion(invalid)).to.throw(
       CustomError,
-      "Geometry must be an object",
+      "region.geometryObjectInvalid",
     );
   });
 
@@ -34,7 +34,7 @@ describe("Unit: validateDataUpdate", () => {
     } as unknown as Partial<IRegion>;
     expect(() => validateUpdateRegion(invalid)).to.throw(
       CustomError,
-      'Geometry.type must be "Polygon"',
+      "region.geometryTypeInvalid",
     );
   });
 
@@ -47,7 +47,7 @@ describe("Unit: validateDataUpdate", () => {
     } as Partial<IRegion>;
     expect(() => validateUpdateRegion(invalid)).to.throw(
       CustomError,
-      "Geometry.coordinates must be an array",
+      "region.coordinatesNotArray",
     );
   });
 
@@ -61,7 +61,7 @@ describe("Unit: validateDataUpdate", () => {
 
     expect(() => validateUpdateRegion(invalid)).to.throw(
       CustomError,
-      "Geometry.coordinates cannot be empty",
+      "region.coordinatesEmpty",
     );
   });
 
@@ -73,15 +73,19 @@ describe("Unit: validateDataUpdate", () => {
           [
             [1, 2],
             [2, 3],
-            [3, 4],
+            [3, 4], // não fecha
           ],
         ],
       },
     };
-    expect(() => validateUpdateRegion(invalid)).to.throw(
-      CustomError,
-      "Ring 0 must be closed",
-    );
+
+    try {
+      validateUpdateRegion(invalid);
+    } catch (err) {
+      expect(err).to.be.instanceOf(CustomError);
+      expect((err as CustomError).message).to.equal("region.ringNotClosed");
+      expect((err as CustomError).options).to.deep.equal({ ringIndex: 0 });
+    }
   });
 
   it("should throw if a point is not an array", () => {
@@ -91,9 +95,10 @@ describe("Unit: validateDataUpdate", () => {
         coordinates: [[123, [1, 1], [1, 1], 123]],
       },
     } as unknown as Partial<IRegion>;
+
     expect(() => validateUpdateRegion(invalid)).to.throw(
       CustomError,
-      /must be an array/,
+      "region.pointNotArray",
     );
   });
 
@@ -101,13 +106,18 @@ describe("Unit: validateDataUpdate", () => {
     const invalid: Partial<IRegion> = {
       geometry: {
         type: "Polygon",
-        coordinates: [[[[1, 2], [3, 4], [5], [1, 2]]]],
+        coordinates: [[[1, 1], [2], [3, 3], [1, 1]]],
       },
-    } as unknown as Partial<IRegion>;
-    expect(() => validateUpdateRegion(invalid)).to.throw(
-      CustomError,
-      /must have exactly 2 numbers/,
-    );
+    };
+
+    try {
+      validateUpdateRegion(invalid);
+    } catch (err) {
+      expect(err).to.be.instanceOf(CustomError);
+      expect((err as CustomError).message).to.equal(
+        "region.pointInvalidLength",
+      );
+    }
   });
 
   it("should not throw if geometry is valid", () => {

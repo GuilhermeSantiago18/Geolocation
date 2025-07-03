@@ -6,12 +6,12 @@ import {
   getRegionsByAddressController,
   listAllRegionsController,
   updateRegionController,
-} from "../controllers/region/regionController";
+} from "../controllers/region/RegionController";
 import { Router } from "express";
 import { asyncHandler } from "../utils/asyncHandler";
 import { validateCreateRegionMiddleware } from "../middlewares/createRegionMiddlewarre";
 import { validateObjectIdMiddleware } from "../middlewares/validateObjectIdMiddleware";
-import { validateUpdateRegionMiddleware } from "../middlewares/updateRegionMiddleware";
+import { validateUpdateRegionMiddleware } from "../middlewares/validateUpdateRegionMiddleware";
 import { validateQueryPointMiddleware } from "../middlewares/validateQueryPointMiddleware";
 import { validateAddressQueryMiddleware } from "../middlewares/validateAdressQueryMiddleware";
 

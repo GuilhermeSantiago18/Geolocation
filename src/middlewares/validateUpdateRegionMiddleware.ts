@@ -16,6 +16,7 @@ export const validateUpdateRegionMiddleware = (
     if (error instanceof CustomError) {
       next(error);
     } else {
+      console.log("error", error);
       next(new CustomError("Validation failed", HttpStatusCode.BAD_REQUEST));
     }
   }

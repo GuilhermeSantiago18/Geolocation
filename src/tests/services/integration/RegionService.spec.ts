@@ -65,7 +65,7 @@ describe("Integration Region Service Tests", () => {
     } catch (error) {
       expect(error).to.be.instanceOf(CustomError);
       expect((error as CustomError).statusCode).to.equal(404);
-      expect((error as CustomError).message).to.equal("Region not found");
+      expect((error as CustomError).message).to.equal("region.notFound");
     }
   });
 
@@ -110,7 +110,7 @@ describe("Integration Region Service Tests", () => {
     } catch (error) {
       expect(error).to.be.instanceOf(CustomError);
       expect((error as CustomError).statusCode).to.equal(404);
-      expect((error as CustomError).message).to.equal("Region not found");
+      expect((error as CustomError).message).to.equal("region.notFound");
     }
   });
 });

@@ -4,6 +4,6 @@ import { HttpStatusCode } from "../constants/httpStatus";
 
 export const validateObjectId = (id: string) => {
   if (!Types.ObjectId.isValid(id)) {
-    throw new CustomError("Invalid Id format", HttpStatusCode.BAD_REQUEST);
+    throw new CustomError("region.invalidIdFormat", HttpStatusCode.BAD_REQUEST);
   }
 };
