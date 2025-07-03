@@ -272,4 +272,37 @@ describe("Integration Region Controller Tests", () => {
     expect(body.length).to.equal(1);
     expect(body[0]).to.have.property("name", "Region A");
   });
+
+  it("GET /regions/address should return an Error when address is empty", async () => {
+    await Region.create({
+      name: "Region A",
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [-35.42647, -5.64583],
+            [-35.43031, -5.6473],
+            [-35.43286, -5.64345],
+            [-35.42826, -5.64103],
+            [-35.42647, -5.64583],
+          ],
+        ],
+      },
+    });
+
+    const res = await request(app)
+      .get(`/region/address`)
+      .query({ address: "" });
+
+    interface ErrorResponse {
+      errorMessage: string;
+    }
+
+    const body = res.body as ErrorResponse;
+
+    expect(res.status).to.equal(400);
+    expect(body.errorMessage).to.equal(
+      "Address is required and must be a string",
+    );
+  });
 });
