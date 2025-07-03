@@ -24,7 +24,6 @@ export const geocodeAddress = async (address: string): Promise<IPoint> => {
     });
 
     const data = response.data as GeocodeAPIResult[];
-    console.log("data", data);
     if (!Array.isArray(data) || data.length === 0) {
       throw new CustomError("Address not found", 400);
     }
