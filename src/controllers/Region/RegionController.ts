@@ -9,9 +9,6 @@ import {
   updateRegionService,
 } from "../../services/region/regionService";
 import { IPoint, IRegion } from "../../types/regionTypes";
-import { CustomError } from "../../errors/CustomError";
-import { validateDataQuery } from "../../validations/validateDataQuery";
-import { validateUpdateRegion } from "../../validations/validateDataUpdate";
 import { HttpStatusCode } from "../../constants/httpStatus";
 
 const createRegionController = async (
@@ -50,8 +47,6 @@ const updateRegionController = async (
   const { id } = req.params;
   const data = req.body;
 
-  validateUpdateRegion(data);
-
   const updatedRegion = await updateRegionService(id, data);
   res.status(HttpStatusCode.OK).json(updatedRegion);
 };
@@ -61,9 +56,8 @@ const getRegionByPointController = async (
   res: Response,
 ): Promise<void> => {
   const { lng, lat } = req.query;
-  const validateData = validateDataQuery(lng, lat);
 
-  const regions = await getRegionByPointService(validateData);
+  const regions = await getRegionByPointService({ lng, lat });
   res.status(HttpStatusCode.OK).json(regions);
 };
 
@@ -72,25 +66,17 @@ const getRegionByDistanceController = async (
   res: Response,
 ): Promise<void> => {
   const { lng, lat, distance } = req.query;
-  const validatedData = validateDataQuery(lng, lat, distance);
-  const regions = await getRegionsByDistanceService(validatedData);
+  const regions = await getRegionsByDistanceService({ lng, lat, distance });
   res.status(HttpStatusCode.OK).json(regions);
 };
 
 const getRegionsByAddressController = async (
-  req: Request,
+  req: Request<unknown, unknown, unknown>,
   res: Response,
 ): Promise<void> => {
   const { address } = req.query;
 
-  if (!address || typeof address !== "string") {
-    throw new CustomError(
-      "Address is required and must be a string",
-      HttpStatusCode.BAD_REQUEST,
-    );
-  }
-
-  const regions = await getRegionsByAddressService(address);
+  const regions = await getRegionsByAddressService(address as string);
   res.status(HttpStatusCode.OK).json(regions);
 };
 

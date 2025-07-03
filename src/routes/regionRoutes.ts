@@ -11,6 +11,9 @@ import { Router } from "express";
 import { asyncHandler } from "../utils/asyncHandler";
 import { validateCreateRegionMiddleware } from "../middlewares/createRegionMiddlewarre";
 import { validateObjectIdMiddleware } from "../middlewares/validateObjectIdMiddleware";
+import { validateUpdateRegionMiddleware } from "../middlewares/updateRegionMiddleware";
+import { validateQueryPointMiddleware } from "../middlewares/validateQueryPointMiddleware";
+import { validateAddressQueryMiddleware } from "../middlewares/validateAdressQueryMiddleware";
 
 const router = Router();
 
@@ -28,10 +31,23 @@ router.delete(
 router.put(
   "/:id",
   validateObjectIdMiddleware,
+  validateUpdateRegionMiddleware,
   asyncHandler(updateRegionController),
 );
-router.get("/contains", asyncHandler(getRegionByPointController));
-router.get("/nearby", asyncHandler(getRegionByDistanceController));
-router.get("/address", asyncHandler(getRegionsByAddressController));
+router.get(
+  "/contains",
+  validateQueryPointMiddleware,
+  asyncHandler(getRegionByPointController),
+);
+router.get(
+  "/nearby",
+  validateQueryPointMiddleware,
+  asyncHandler(getRegionByDistanceController),
+);
+router.get(
+  "/address",
+  validateAddressQueryMiddleware,
+  asyncHandler(getRegionsByAddressController),
+);
 
 export default router;
