@@ -18,7 +18,7 @@ const deleteRegionService = async (
 ): Promise<void> => {
   const getRegionById = await Region.findOne({ _id: id });
   if (!getRegionById) {
-    throw new CustomError("Region not found", HttpStatusCode.NOT_FOUND);
+    throw new CustomError("region.notFound", HttpStatusCode.NOT_FOUND);
   }
 
   await Region.deleteOne({ _id: id });
@@ -33,7 +33,7 @@ const updateRegionService = async (
     runValidators: true,
   });
   if (!updated) {
-    throw new CustomError("Region not found", HttpStatusCode.NOT_FOUND);
+    throw new CustomError("region.notFound", HttpStatusCode.NOT_FOUND);
   }
   return updated;
 };

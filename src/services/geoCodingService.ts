@@ -30,7 +30,7 @@ export const geocodeAddress = async (address: string): Promise<IPoint> => {
 
     const data = response.data as GeocodeAPIResult[];
     if (!Array.isArray(data) || data.length === 0) {
-      throw new CustomError("Address not found", HttpStatusCode.BAD_REQUEST);
+      throw new CustomError("region.notFound", HttpStatusCode.BAD_REQUEST);
     }
 
     return {
@@ -42,7 +42,7 @@ export const geocodeAddress = async (address: string): Promise<IPoint> => {
       throw error;
     }
     throw new CustomError(
-      "Failed to fetch coordinates using address",
+      "region.fetch.coordinates",
       HttpStatusCode.BAD_GATEWAY,
     );
   }

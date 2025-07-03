@@ -24,6 +24,12 @@
     "latitudeInvalidFlat": "Latitude at point {{index}} must be between -90 and 90",
 
     "invalidIdFormat": "Invalid Id format",
-    "queryInvalid": "Longitude (lng), latitude (lat), and distance (if provided) must be valid numbers"
+    "queryInvalid": "Longitude (lng), latitude (lat), and distance (if provided) must be valid numbers",
+    "address": "Address is required and must be a string",
+    "notFound": "Region not found",
+
+    "fetch": {
+      "coordinates": "Failed to fetch coordinates using address"
+    }
   }
 }

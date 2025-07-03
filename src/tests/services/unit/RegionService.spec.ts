@@ -42,7 +42,7 @@ describe("Unit: deleteRegionService", () => {
       throw new Error("Expected error was not thrown");
     } catch (err) {
       expect(err).to.be.instanceOf(CustomError);
-      expect((err as CustomError).message).to.equal("Region not found");
+      expect((err as CustomError).message).to.equal("region.notFound");
       expect((err as CustomError).statusCode).to.equal(404);
     }
 

@@ -29,7 +29,7 @@ describe("Unit: GeoCodingService", () => {
       expect.fail("Expected to throw CustomError");
     } catch (error) {
       expect(error as CustomError).to.be.instanceOf(CustomError);
-      expect((error as CustomError).message).to.be.equal("Address not found");
+      expect((error as CustomError).message).to.be.equal("region.notFound");
       expect((error as CustomError).statusCode).to.be.equal(
         HttpStatusCode.BAD_REQUEST,
       );
@@ -45,7 +45,7 @@ describe("Unit: GeoCodingService", () => {
     } catch (error) {
       expect(error as CustomError).to.be.instanceOf(CustomError);
       expect((error as CustomError).message).to.equal(
-        "Failed to fetch coordinates using address",
+        "region.fetch.coordinates",
       );
       expect((error as CustomError).statusCode).to.equal(
         HttpStatusCode.BAD_GATEWAY,

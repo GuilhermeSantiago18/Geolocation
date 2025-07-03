@@ -9,12 +9,7 @@ export const validateAddressQueryMiddleware = (
 ): void => {
   const { address } = req.query;
   if (!address || typeof address !== "string") {
-    return next(
-      new CustomError(
-        "Address is required and must be a string",
-        HttpStatusCode.BAD_REQUEST,
-      ),
-    );
+    return next(new CustomError("region.address", HttpStatusCode.BAD_REQUEST));
   }
   next();
 };
