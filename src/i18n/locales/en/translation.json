@@ -12,6 +12,18 @@
     "pointInvalidLength": "Geometry.coordinates[{{ringIndex}}][{{pointIndex}}] must have exactly 2 numbers",
     "pointNotNumber": "Geometry.coordinates[{{ringIndex}}][{{pointIndex}}][{{numIndex}}] must be a number",
     "longitudeInvalid": "Longitude at coordinates[{{ringIndex}}][{{pointIndex}}] must be between -180 and 180",
-    "latitudeInvalid": "Latitude at coordinates[{{ringIndex}}][{{pointIndex}}] must be between -90 and 90"
+    "latitudeInvalid": "Latitude at coordinates[{{ringIndex}}][{{pointIndex}}] must be between -90 and 90",
+
+    "invalidObject": "Invalid input: expected an object",
+    "geometryRequired": "Field 'geometry' is required and must be an object",
+    "geometryCoordinatesInvalid": "Field 'geometry coordinates' must be an array",
+    "geometryCoordinatesEmpty": "Field 'geometry coordinates' must have at least one ring",
+    "ringTooShort": "Polygon ring must have at least 4 points",
+    "pointInvalid": "Point {{index}} must be an array of [lng, lat]",
+    "longitudeInvalidFlat": "Longitude at point {{index}} must be between -180 and 180",
+    "latitudeInvalidFlat": "Latitude at point {{index}} must be between -90 and 90",
+
+    "invalidIdFormat": "Invalid Id format",
+    "queryInvalid": "Longitude (lng), latitude (lat), and distance (if provided) must be valid numbers"
   }
 }

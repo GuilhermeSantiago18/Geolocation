@@ -1,10 +1,11 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import { CustomError } from "../errors/CustomError";
 import { HttpStatusCode } from "../constants/httpStatus";
+import { IRequestWithTranslation } from "../types/requestTranslation";
 
 export const errorMiddleware = (
   err: Error | CustomError,
-  req: Request,
+  req: IRequestWithTranslation,
   res: Response,
   _next: NextFunction,
 ): void => {
@@ -14,7 +15,10 @@ export const errorMiddleware = (
       : HttpStatusCode.INTERNAL_SERVER_ERROR;
   const message = err.message;
 
+  const options = err instanceof CustomError ? err.options : undefined;
+  const translatedMessage = req.t?.(message, options) || message;
+
   res.status(statusCode).json({
-    errorMessage: message,
+    errorMessage: translatedMessage,
   });
 };

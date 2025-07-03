@@ -16,10 +16,7 @@ export function validateDataQuery(
     distance !== undefined && (Number.isNaN(distanceNum) || distanceNum < 0);
 
   if (isLngInvalid || isLatInvalid || isDistanceInvalid) {
-    throw new CustomError(
-      "Longitude (lng), latitude (lat), and distance (if provided) must be valid numbers",
-      HttpStatusCode.BAD_REQUEST,
-    );
+    throw new CustomError("region.queryInvalid", HttpStatusCode.BAD_REQUEST);
   }
 
   const result: { lng: number; lat: number; distance?: number } = {
