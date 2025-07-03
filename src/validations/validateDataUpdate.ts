@@ -1,10 +1,11 @@
+import { HttpStatusCode } from "../constants/httpStatus";
 import { CustomError } from "../errors/CustomError";
 import { IRegion } from "../types/regionTypes";
 
 function assert(
   condition: boolean,
   message: string,
-  status = 400,
+  status = HttpStatusCode.BAD_REQUEST,
 ): asserts condition {
   if (!condition) throw new CustomError(message, status);
 }
@@ -13,7 +14,7 @@ export function validateUpdateRegion(data: Partial<IRegion>): void {
   if (("type" in data || "coordinates" in data) && !("geometry" in data)) {
     throw new CustomError(
       "Invalid payload: 'type' and 'coordinates' must be inside the 'geometry' object",
-      400,
+      HttpStatusCode.BAD_REQUEST,
     );
   }
 

@@ -5,6 +5,7 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 import app from "../../../app";
 import { Region } from "../../../models/region/regionModel";
 import { IRegion } from "../../../types/regionTypes";
+import { HttpStatusCode } from "../../../constants/httpStatus";
 
 describe("Integration Region Controller Tests", () => {
   let mongoServer: MongoMemoryServer;
@@ -300,7 +301,7 @@ describe("Integration Region Controller Tests", () => {
 
     const body = res.body as ErrorResponse;
 
-    expect(res.status).to.equal(400);
+    expect(res.status).to.equal(HttpStatusCode.BAD_REQUEST);
     expect(body.errorMessage).to.equal(
       "Address is required and must be a string",
     );

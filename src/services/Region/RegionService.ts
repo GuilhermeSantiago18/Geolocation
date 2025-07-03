@@ -3,6 +3,7 @@ import { Region } from "../../models/region/regionModel";
 import { IRegion, IPoint } from "../../types/regionTypes";
 import { geocodeAddress } from "../geoCodingService";
 import { CustomError } from "../../errors/CustomError";
+import { HttpStatusCode } from "../../constants/httpStatus";
 
 const createRegionService = async (data: IRegion): Promise<IRegion> => {
   return await Region.create(data);
@@ -17,7 +18,7 @@ const deleteRegionService = async (
 ): Promise<void> => {
   const getRegionById = await Region.findOne({ _id: id });
   if (!getRegionById) {
-    throw new CustomError("Region not found", 404);
+    throw new CustomError("Region not found", HttpStatusCode.NOT_FOUND);
   }
 
   await Region.deleteOne({ _id: id });
@@ -32,7 +33,7 @@ const updateRegionService = async (
     runValidators: true,
   });
   if (!updated) {
-    throw new CustomError("Region not found", 404);
+    throw new CustomError("Region not found", HttpStatusCode.NOT_FOUND);
   }
   return updated;
 };

@@ -1,3 +1,4 @@
+import { HttpStatusCode } from "../constants/httpStatus";
 import { CustomError } from "../errors/CustomError";
 
 interface Geometry {
@@ -11,7 +12,7 @@ interface RegionInput {
 }
 
 function assert(condition: boolean, message: string): asserts condition {
-  if (!condition) throw new CustomError(message, 400);
+  if (!condition) throw new CustomError(message, HttpStatusCode.BAD_REQUEST);
 }
 
 function validatePolygonCoordinates(

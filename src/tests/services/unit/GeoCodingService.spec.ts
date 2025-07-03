@@ -4,6 +4,7 @@ import axios from "axios";
 
 import { geocodeAddress } from "../../../services/geoCodingService";
 import { CustomError } from "../../../errors/CustomError";
+import { HttpStatusCode } from "../../../constants/httpStatus";
 
 describe("Unit: GeoCodingService", () => {
   afterEach(() => {
@@ -29,7 +30,9 @@ describe("Unit: GeoCodingService", () => {
     } catch (error) {
       expect(error as CustomError).to.be.instanceOf(CustomError);
       expect((error as CustomError).message).to.be.equal("Address not found");
-      expect((error as CustomError).statusCode).to.be.equal(400);
+      expect((error as CustomError).statusCode).to.be.equal(
+        HttpStatusCode.BAD_REQUEST,
+      );
     }
   });
 
@@ -44,7 +47,9 @@ describe("Unit: GeoCodingService", () => {
       expect((error as CustomError).message).to.equal(
         "Failed to fetch coordinates using address",
       );
-      expect((error as CustomError).statusCode).to.equal(502);
+      expect((error as CustomError).statusCode).to.equal(
+        HttpStatusCode.BAD_GATEWAY,
+      );
     }
   });
 });

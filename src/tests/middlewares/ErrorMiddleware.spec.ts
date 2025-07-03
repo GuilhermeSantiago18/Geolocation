@@ -3,6 +3,7 @@ import sinon from "sinon";
 import { Request, Response, NextFunction } from "express";
 import { errorMiddleware } from "../../middlewares/errorMiddleware";
 import { CustomError } from "../../errors/CustomError";
+import { HttpStatusCode } from "../../constants/httpStatus";
 
 describe("Unit: Middleware: errorMiddleware", () => {
   let req: Partial<Request>;
@@ -24,7 +25,10 @@ describe("Unit: Middleware: errorMiddleware", () => {
   });
 
   it("should handle CustomError correctly", () => {
-    const customError = new CustomError("Custom failure", 418);
+    const customError = new CustomError(
+      "Custom failure",
+      HttpStatusCode.IM_TEAPOT,
+    );
 
     errorMiddleware(
       customError,
@@ -33,7 +37,7 @@ describe("Unit: Middleware: errorMiddleware", () => {
       {} as NextFunction,
     );
 
-    expect(statusStub.calledWith(418)).to.be.equal(true);
+    expect(statusStub.calledWith(HttpStatusCode.IM_TEAPOT)).to.be.equal(true);
     expect(jsonStub.calledWith({ errorMessage: "Custom failure" })).to.be.equal(
       true,
     );
@@ -49,7 +53,9 @@ describe("Unit: Middleware: errorMiddleware", () => {
       {} as NextFunction,
     );
 
-    expect(statusStub.calledWith(500)).to.be.equal(true);
+    expect(
+      statusStub.calledWith(HttpStatusCode.INTERNAL_SERVER_ERROR),
+    ).to.be.equal(true);
     expect(
       jsonStub.calledWith({ errorMessage: "Generic failure" }),
     ).to.be.equal(true);

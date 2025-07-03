@@ -14,6 +14,7 @@ import { validateDataQuery } from "../../validations/validateDataQuery";
 import { validateCreateRegion } from "../../validations/validateDataCreate";
 import { validateUpdateRegion } from "../../validations/validateDataUpdate";
 import { validateObjectId } from "../../validations/validateObjectId";
+import { HttpStatusCode } from "../../constants/httpStatus";
 
 const createRegionController = async (
   req: Request<unknown, unknown, IRegion>,
@@ -25,7 +26,7 @@ const createRegionController = async (
 
   const newRegion = await createRegionService({ name, geometry });
 
-  res.status(201).json(newRegion);
+  res.status(HttpStatusCode.CREATED).json(newRegion);
 };
 
 const listAllRegionsController = async (
@@ -33,7 +34,7 @@ const listAllRegionsController = async (
   res: Response,
 ): Promise<void> => {
   const allRegions = await getAllRegionsService();
-  res.status(200).json(allRegions);
+  res.status(HttpStatusCode.OK).json(allRegions);
 };
 
 const deleteRegionController = async (
@@ -44,7 +45,7 @@ const deleteRegionController = async (
   validateObjectId(id);
 
   await deleteRegionService(id);
-  res.status(204).send();
+  res.status(HttpStatusCode.NO_CONTENT).send();
 };
 
 const updateRegionController = async (
@@ -58,7 +59,7 @@ const updateRegionController = async (
   validateUpdateRegion(data);
 
   const updatedRegion = await updateRegionService(id, data);
-  res.status(200).json(updatedRegion);
+  res.status(HttpStatusCode.OK).json(updatedRegion);
 };
 
 const getRegionByPointController = async (
@@ -69,7 +70,7 @@ const getRegionByPointController = async (
   const validateData = validateDataQuery(lng, lat);
 
   const regions = await getRegionByPointService(validateData);
-  res.status(200).json(regions);
+  res.status(HttpStatusCode.OK).json(regions);
 };
 
 const getRegionByDistanceController = async (
@@ -79,7 +80,7 @@ const getRegionByDistanceController = async (
   const { lng, lat, distance } = req.query;
   const validatedData = validateDataQuery(lng, lat, distance);
   const regions = await getRegionsByDistanceService(validatedData);
-  res.status(200).json(regions);
+  res.status(HttpStatusCode.OK).json(regions);
 };
 
 const getRegionsByAddressController = async (
@@ -89,11 +90,14 @@ const getRegionsByAddressController = async (
   const { address } = req.query;
 
   if (!address || typeof address !== "string") {
-    throw new CustomError("Address is required and must be a string", 400);
+    throw new CustomError(
+      "Address is required and must be a string",
+      HttpStatusCode.BAD_REQUEST,
+    );
   }
 
   const regions = await getRegionsByAddressService(address);
-  res.status(200).json(regions);
+  res.status(HttpStatusCode.OK).json(regions);
 };
 
 export {

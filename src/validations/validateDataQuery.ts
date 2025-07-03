@@ -1,3 +1,4 @@
+import { HttpStatusCode } from "../constants/httpStatus";
 import { CustomError } from "../errors/CustomError";
 
 export function validateDataQuery(
@@ -17,7 +18,7 @@ export function validateDataQuery(
   if (isLngInvalid || isLatInvalid || isDistanceInvalid) {
     throw new CustomError(
       "Longitude (lng), latitude (lat), and distance (if provided) must be valid numbers",
-      400,
+      HttpStatusCode.BAD_REQUEST,
     );
   }
 

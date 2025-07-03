@@ -1,6 +1,7 @@
 import axios from "axios";
 import { IPoint } from "../types/regionTypes";
 import { CustomError } from "../errors/CustomError";
+import { HttpStatusCode } from "../constants/httpStatus";
 
 interface GeocodeAPIResult {
   lat: string;
@@ -29,7 +30,7 @@ export const geocodeAddress = async (address: string): Promise<IPoint> => {
 
     const data = response.data as GeocodeAPIResult[];
     if (!Array.isArray(data) || data.length === 0) {
-      throw new CustomError("Address not found", 400);
+      throw new CustomError("Address not found", HttpStatusCode.BAD_REQUEST);
     }
 
     return {
@@ -40,6 +41,9 @@ export const geocodeAddress = async (address: string): Promise<IPoint> => {
     if (error instanceof CustomError) {
       throw error;
     }
-    throw new CustomError("Failed to fetch coordinates using address", 502);
+    throw new CustomError(
+      "Failed to fetch coordinates using address",
+      HttpStatusCode.BAD_GATEWAY,
+    );
   }
 };
