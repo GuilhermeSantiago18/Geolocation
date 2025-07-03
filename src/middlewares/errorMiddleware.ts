@@ -8,7 +8,7 @@ export const errorMiddleware = (
   _next: NextFunction,
 ): void => {
   const statusCode = err instanceof CustomError ? err.statusCode : 500;
-  const message = err.message || "Internal Server Error";
+  const message = err.message;
 
   res.status(statusCode).json({
     errorMessage: message,
