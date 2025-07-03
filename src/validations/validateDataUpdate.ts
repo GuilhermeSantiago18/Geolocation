@@ -1,5 +1,5 @@
 import { CustomError } from "../errors/CustomError";
-import { IRegion } from "../types/IRegion";
+import { IRegion } from "../types/regionTypes";
 
 function assert(
   condition: boolean,

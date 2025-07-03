@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IPoint } from "../types/IRegion";
+import { IPoint } from "../types/regionTypes";
 import { CustomError } from "../errors/CustomError";
 
 interface GeocodeAPIResult {

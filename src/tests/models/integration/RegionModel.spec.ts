@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
-import { Region } from "../../../models/Region/RegionModel";
-import { IRegion } from "../../../types/IRegion";
+import { Region } from "../../../models/region/regionModel";
+import { IRegion } from "../../../types/regionTypes";
 
 describe("Integration Region Model Tests", function () {
   let mongoServer: MongoMemoryServer;

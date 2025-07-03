@@ -7,8 +7,8 @@ import {
   getRegionsByAddressService,
   getRegionsByDistanceService,
   updateRegionService,
-} from "../../services/Region/RegionService";
-import { IPoint, IRegion } from "../../types/IRegion";
+} from "../../services/region/regionService";
+import { IPoint, IRegion } from "../../types/regionTypes";
 import { CustomError } from "../../errors/CustomError";
 import { validateDataQuery } from "../../validations/validateDataQuery";
 import { validateCreateRegion } from "../../validations/validateDataCreate";

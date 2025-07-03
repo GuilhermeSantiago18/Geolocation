@@ -6,10 +6,10 @@ import {
   createRegionService,
   deleteRegionService,
   updateRegionService,
-} from "../../../services/Region/RegionService";
+} from "../../../services/region/regionService";
 
-import { IRegion } from "../../../types/IRegion";
-import { Region } from "../../../models/Region/RegionModel";
+import { IRegion } from "../../../types/regionTypes";
+import { Region } from "../../../models/region/regionModel";
 import { CustomError } from "../../../errors/CustomError";
 
 describe("Integration Region Service Tests", () => {

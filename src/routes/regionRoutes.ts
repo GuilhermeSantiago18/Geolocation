@@ -6,7 +6,7 @@ import {
   getRegionsByAddressController,
   listAllRegionsController,
   updateRegionController,
-} from "../controllers/Region/RegionController";
+} from "../controllers/region/regionController";
 import { Router } from "express";
 import { asyncHandler } from "../utils/asyncHandler";
 

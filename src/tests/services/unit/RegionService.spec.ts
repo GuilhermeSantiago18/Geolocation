@@ -5,10 +5,10 @@ import mongoose from "mongoose";
 import {
   createRegionService,
   deleteRegionService,
-} from "../../../services/Region/RegionService";
-import { Region } from "../../../models/Region/RegionModel";
+} from "../../../services/region/regionService";
+import { Region } from "../../../models/region/regionModel";
 import { CustomError } from "../../../errors/CustomError";
-import { IRegion } from "../../../types/IRegion";
+import { IRegion } from "../../../types/regionTypes";
 
 describe("Unit: deleteRegionService", () => {
   let findOneStub: sinon.SinonStub;

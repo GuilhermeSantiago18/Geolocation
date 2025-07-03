@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { Region } from "../../models/Region/RegionModel";
-import { IRegion, IPoint } from "../../types/IRegion";
+import { Region } from "../../models/region/regionModel";
+import { IRegion, IPoint } from "../../types/regionTypes";
 import { geocodeAddress } from "../geoCodingService";
 import { CustomError } from "../../errors/CustomError";
 
