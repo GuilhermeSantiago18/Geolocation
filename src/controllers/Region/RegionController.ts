@@ -11,7 +11,6 @@ import {
 import { IPoint, IRegion } from "../../types/regionTypes";
 import { CustomError } from "../../errors/CustomError";
 import { validateDataQuery } from "../../validations/validateDataQuery";
-import { validateCreateRegion } from "../../validations/validateDataCreate";
 import { validateUpdateRegion } from "../../validations/validateDataUpdate";
 import { validateObjectId } from "../../validations/validateObjectId";
 import { HttpStatusCode } from "../../constants/httpStatus";
@@ -21,8 +20,6 @@ const createRegionController = async (
   res: Response,
 ): Promise<void> => {
   const { name, geometry } = req.body;
-
-  validateCreateRegion(req.body);
 
   const newRegion = await createRegionService({ name, geometry });
 
