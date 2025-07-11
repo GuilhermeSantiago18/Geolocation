@@ -1,0 +1,13 @@
+npm test
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+
+npm run format
+npm run lint
+if [[ `git diff --stat` != '' ]]; then
+  echo "Há arquivos modificados após formatar. Por favor, revise, faça commit e tente de novo."
+  exit 1
+fi
+
+

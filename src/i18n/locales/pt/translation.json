@@ -1,0 +1,34 @@
+{
+  "region": {
+    "invalidPayloadGeometryWrapper": "Payload inválido: 'type' e 'coordinates' devem estar dentro do objeto 'geometry'",
+    "nameRequired": "O nome é obrigatório e deve ser uma string não vazia",
+    "geometryObjectInvalid": "O campo 'geometry' deve ser um objeto",
+    "geometryTypeInvalid": "O tipo da geometria deve ser \"Polygon\"",
+    "coordinatesNotArray": "O campo 'coordinates' deve ser um array",
+    "coordinatesEmpty": "O campo 'coordinates' não pode estar vazio",
+    "ringNotClosed": "O anel {{ringIndex}} deve estar fechado (primeiro e último ponto devem ser iguais)",
+    "ringNotArray": "Geometry.coordinates[{{ringIndex}}] deve ser um array",
+    "pointNotArray": "Geometry.coordinates[{{ringIndex}}][{{pointIndex}}] deve ser um array",
+    "pointInvalidLength": "Geometry.coordinates[{{ringIndex}}][{{pointIndex}}] deve conter exatamente 2 números",
+    "pointNotNumber": "Geometry.coordinates[{{ringIndex}}][{{pointIndex}}][{{numIndex}}] deve ser um número",
+    "longitudeInvalid": "Longitude em coordinates[{{ringIndex}}][{{pointIndex}}] deve estar entre -180 e 180",
+    "latitudeInvalid": "Latitude em coordinates[{{ringIndex}}][{{pointIndex}}] deve estar entre -90 e 90",
+
+    "invalidObject": "Entrada inválida: esperado um objeto",
+    "geometryRequired": "O campo 'geometry' é obrigatório e deve ser um objeto",
+    "geometryCoordinatesInvalid": "O campo 'geometry coordinates' deve ser um array",
+    "geometryCoordinatesEmpty": "O campo 'geometry coordinates' deve conter pelo menos um anel",
+    "ringTooShort": "O anel do polígono deve conter pelo menos 4 pontos",
+    "pointInvalid": "O ponto {{index}} deve ser um array no formato [lng, lat]",
+    "longitudeInvalidFlat": "Longitude no ponto {{index}} deve estar entre -180 e 180",
+    "latitudeInvalidFlat": "Latitude no ponto {{index}} deve estar entre -90 e 90",
+
+    "invalidIdFormat": "Formato de Id inválido",
+    "queryInvalid": "Longitude (lng), latitude (lat) e distance (se fornecido) devem ser números válidos",
+    "address": "O endereço é obrigatório e deve ser string",
+    "notFound": "Region não encontrada",
+    "fetch": {
+      "coordinates": "Falha ao buscar coordenadas usando endereço"
+    }
+  }
+}
